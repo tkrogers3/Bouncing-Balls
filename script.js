@@ -13,14 +13,21 @@ function random(min, max) {
     return num;
 }
 
-function Ball(x, y, velX, velY, color, size) {
+function Shape(x, y, velX, velY, exists) {
     this.x = x;
     this.y = y;
     this.velX = velX;
     this.velY = velY;
-    this.color = color;
+    this.exists= exists;
+
+
+function Ball(x, y, velX, velY, exists, color, size) {
+   Shape.call(this,x,y,velX,velY,exists);
+   this.color = color;
     this.size = size;
 }
+Ball.prototype = Object.create(Shape.prototype);
+
 
 Ball.prototype.draw = function () {
     ctx.beginPath();
@@ -76,7 +83,8 @@ while (balls.length < 25) {
     random(-7,7),
     random(-7,7),
     'rgb(' + random(0,255) + ',' + random(0,255) + ',' + random(0,255) +')',
-    size
+    size,
+    true
   );
 
   balls.push(ball);
